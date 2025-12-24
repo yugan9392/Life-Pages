@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lifepages - మీ జీవిత కథను సంగ్రహించండి</title>
+    <title>ఇలాన్ మస్క్ జీవిత కథ - Lifepages</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Noto Sans Telugu', sans-serif; }
-        .timeline-dot { width: 12px; height: 12px; }
-        .section-title { position: relative; padding-left: 1rem; }
-        .section-title:before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 4px; height: 24px; background: #3b82f6; border-radius: 2px; }
+        .story-container { max-width: 900px; }
+        .life-timeline { position: relative; }
+        .timeline-item { position: relative; padding-left: 30px; margin-bottom: 30px; }
+        .timeline-dot { position: absolute; left: 0; top: 5px; width: 16px; height: 16px; background: #3b82f6; border-radius: 50%; }
+        .timeline-content { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .chapter-tag { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 4px 12px; border-radius: 20px; font-size: 14px; margin-right: 8px; margin-bottom: 8px; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
     
-    <!-- Header/Navigation -->
-    <header class="bg-white shadow-sm">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
@@ -25,436 +28,447 @@
                 </div>
                 <span class="text-xl font-bold text-blue-700">Lifepages.store</span>
             </div>
-            <div>
-                <button class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">
-                    <i class="fas fa-sign-in-alt mr-2"></i>లాగిన్
-                </button>
+            <a href="index.html" class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">
+                <i class="fas fa-home mr-2"></i>హోమ్‌కి వెళ్ళండి
+            </a>
+        </div>
+    </nav>
+
+    <!-- Story Header -->
+    <header class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex justify-center mb-6">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/200px-Elon_Musk_Royal_Society_%28crop2%29.jpg" 
+                     alt="Elon Musk" class="w-32 h-32 rounded-full border-4 border-white shadow-lg">
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">ఇలాన్ మస్క్</h1>
+            <p class="text-xl text-blue-200 mb-2">టెస్లా, స్పేస్‌ఎక్స్, న్యూరాలింక్ స్థాపకుడు</p>
+            <p class="text-blue-300">పుట్టిన తేదీ: జూన్ 28, 1971 • ప్రెటోరియా, దక్షిణాఫ్రికా</p>
+            <div class="mt-6 flex flex-wrap justify-center gap-3">
+                <span class="chapter-tag bg-white text-blue-900">ప్రపంచ నాయకుడు</span>
+                <span class="chapter-tag bg-white text-blue-900">టెక్నాలజీ దిగ్గజం</span>
+                <span class="chapter-tag bg-white text-blue-900">విప్లవాత్మక ఆవిష్కర్త</span>
+                <span class="chapter-tag bg-white text-blue-900">అంతరిక్ష పయనికుడు</span>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="py-12 bg-gradient-to-r from-blue-50 to-indigo-50">
-        <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                మీ <span class="text-blue-600">జీవిత కథ</span> ఇక్కడ నిలిపేయండి
-            </h1>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-                పుట్టిన నాడు నుంచి ఈ రోజు వరకు - మీ విద్య, విజయాలు, జీవితంలోని ముఖ్యమైన క్షణాలన్నింటినీ ఒకే చోట సేకరించండి.
-            </p>
-            <button id="startStoryBtn" class="bg-blue-600 text-white text-lg px-8 py-3 rounded-xl hover:bg-blue-700 shadow-lg transition transform hover:-translate-y-1">
-                <i class="fas fa-pen-fancy mr-2"></i>నా కథను ప్రారంభించండి
-            </button>
-        </div>
-    </section>
-
-    <!-- Story Form Section -->
-    <section id="storyForm" class="container mx-auto px-4 py-8 max-w-4xl hidden">
-        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
-            <h2 class="text-2xl font-bold text-gray-800 mb-2 section-title">మీ జీవిత వివరాలు రాయండి</h2>
-            <p class="text-gray-600 mb-6">మీ గురించి ప్రాథమిక వివరాలు ఇవ్వండి. తర్వాత మరింత వివరాలు జోడించవచ్చు.</p>
+    <!-- Main Story Content -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="story-container mx-auto">
             
-            <form id="lifeStoryForm">
-                <!-- Personal Details -->
-                <div class="mb-8">
-                    <h3 class="text-xl font-semibold text-gray-700 mb-4 flex items-center">
-                        <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-2">
-                            1
-                        </div>
-                        వ్యక్తిగత వివరాలు
-                    </h3>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-gray-700 mb-2">పూర్తి పేరు *</label>
-                            <input type="text" id="fullName" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 mb-2">పుట్టిన తేది *</label>
-                            <input type="date" id="dob" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 mb-2">పుట్టిన ప్రదేశం</label>
-                            <input type="text" id="birthPlace" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="గ్రామం/నగరం">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 mb-2">ప్రస్తుత నగరం</label>
-                            <input type="text" id="currentCity" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Education Timeline -->
-                <div class="mb-8">
-                    <h3 class="text-xl font-semibold text-gray-700 mb-4 flex items-center">
-                        <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-2">
-                            2
-                        </div>
-                        విద్యా వ్యవస్థ
-                    </h3>
-                    <div id="educationContainer">
-                        <div class="education-entry border-l-4 border-blue-500 pl-6 pb-6 mb-6 relative">
-                            <div class="timeline-dot absolute -left-2 top-0 bg-blue-500 rounded-full"></div>
-                            <div class="grid md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-gray-700 mb-2">విద్యా స్థాయి</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-lg">
-                                        <option>పాఠశాల</option>
-                                        <option>ఇంటర్మీడియట్</option>
-                                        <option>డిగ్రీ</option>
-                                        <option>పోస్ట్ గ్రాడ్యుయేషన్</option>
-                                        <option>డాక్టరేట్</option>
-                                        <option>డిప్లొమా</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-gray-700 mb-2">సంవత్సరం</label>
-                                    <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="ఉదా: 2010-2014">
-                                </div>
-                                <div class="md:col-span-2">
-                                    <label class="block text-gray-700 mb-2">సంస్థ పేరు</label>
-                                    <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="కళాశాల/విశ్వవిద్యాలయం పేరు">
-                                </div>
-                                <div class="md:col-span-2">
-                                    <label class="block text-gray-700 mb-2">వివరణ (ఐచ్ఛికం)</label>
-                                    <textarea class="w-full p-3 border border-gray-300 rounded-lg" rows="2" placeholder="మీరు నేర్చుకున్నది, గుర్తుండిపోయే అనుభవాలు..."></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" id="addEducation" class="text-blue-600 hover:text-blue-800 flex items-center">
-                        <i class="fas fa-plus-circle mr-2"></i>మరొక విద్యా వివరం జోడించండి
-                    </button>
-                </div>
-
-                <!-- Success/Achievements -->
-                <div class="mb-8">
-                    <h3 class="text-xl font-semibold text-gray-700 mb-4 flex items-center">
-                        <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-2">
-                            3
-                        </div>
-                        విజయాలు & సాధనలు
-                    </h3>
-                    <div id="achievementsContainer">
-                        <div class="achievement-entry bg-yellow-50 border border-yellow-200 rounded-xl p-5 mb-4">
-                            <div class="flex justify-between items-start mb-3">
-                                <div>
-                                    <label class="block text-gray-700 mb-2">విజయం/సాధన పేరు *</label>
-                                    <input type="text" class="w-full p-3 border border-gray-300 rounded-lg mb-3" placeholder="ఉదా: ప్రాజెక్ట్ పూర్తి చేయడం, పురస్కారం, ఉద్యోగ ప్రమోషన్">
-                                </div>
-                                <button type="button" class="remove-achievement text-red-500 hover:text-red-700">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="grid md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-gray-700 mb-2">సంవత్సరం</label>
-                                    <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="ఉదా: 2020">
-                                </div>
-                                <div>
-                                    <label class="block text-gray-700 mb-2">ప్రాముఖ్యత</label>
-                                    <select class="w-full p-3 border border-gray-300 rounded-lg">
-                                        <option>సాధారణ</option>
-                                        <option>మధ్యస్థ</option>
-                                        <option>ముఖ్యమైనది</option>
-                                        <option>జీవితంలో మలుపు</option>
-                                    </select>
-                                </div>
-                                <div class="md:col-span-2">
-                                    <label class="block text-gray-700 mb-2">వివరణ</label>
-                                    <textarea class="w-full p-3 border border-gray-300 rounded-lg" rows="3" placeholder="ఈ విజయం గురించి మరింత వివరించండి..."></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" id="addAchievement" class="text-blue-600 hover:text-blue-800 flex items-center">
-                        <i class="fas fa-plus-circle mr-2"></i>మరొక విజయం జోడించండి
-                    </button>
-                </div>
-
-                <!-- Life Summary -->
-                <div class="mb-8">
-                    <h3 class="text-xl font-semibold text-gray-700 mb-4 flex items-center">
-                        <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-2">
-                            4
-                        </div>
+            <!-- Life Summary -->
+            <section class="mb-12">
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 border-l-4 border-blue-600 pl-4">
                         జీవిత సారాంశం
-                    </h3>
-                    <div>
-                        <label class="block text-gray-700 mb-2">మీ జీవితం గురించి సంక్షిప్తంగా (ఐచ్ఛికం)</label>
-                        <textarea id="lifeSummary" class="w-full p-3 border border-gray-300 rounded-lg" rows="4" placeholder="మీ జీవితం యొక్క ముఖ్య అంశాలు, నేర్చుకున్న పాఠాలు, ఇతరులకు సలహాలు..."></textarea>
+                    </h2>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                        ఇలాన్ రీవ్ మస్క్ ఒక దక్షిణాఫ్రికా-కెనడా-అమెరికా వ్యాపారవేత్త మరియు నిర్మాత. 
+                        అతను స్పేస్‌ఎక్స్ యొక్క సీఈఓ మరియు ప్రధాన ఆర్కిటెక్ట్, టెస్లా యొక్క సీఈఓ మరియు ప్రోడక్ట్ ఆర్కిటెక్ట్, 
+                        ది బోరింగ్ కంపెనీ స్థాపకుడు, న్యూరాలింక్ సహ-స్థాపకుడు మరియు ఓపెన్‌ఎయి సహ-స్థాపకుడు. 
+                        జూన్ 2022 నాటికి, అతను ప్రపంచంలో అత్యంధ ధనవంతుడిగా నిలిచాడు.
+                    </p>
+                    
+                    <!-- Quick Stats -->
+                    <div class="grid md:grid-cols-4 gap-6 mt-8">
+                        <div class="text-center p-4 bg-blue-50 rounded-xl">
+                            <div class="text-3xl font-bold text-blue-700">5+</div>
+                            <div class="text-gray-600">కంపెనీలు స్థాపించారు</div>
+                        </div>
+                        <div class="text-center p-4 bg-green-50 rounded-xl">
+                            <div class="text-3xl font-bold text-green-700">$200B+</div>
+                            <div class="text-gray-600">నెట్ వర్త్</div>
+                        </div>
+                        <div class="text-center p-4 bg-purple-50 rounded-xl">
+                            <div class="text-3xl font-bold text-purple-700">51</div>
+                            <div class="text-gray-600">పేటెంట్లు</div>
+                        </div>
+                        <div class="text-center p-4 bg-yellow-50 rounded-xl">
+                            <div class="text-3xl font-bold text-yellow-700">10M+</div>
+                            <div class="text-gray-600">ట్విట్టర్ ఫాలోవర్స్</div>
+                        </div>
                     </div>
                 </div>
+            </section>
 
-                <!-- Submit Button -->
-                <div class="flex justify-center pt-6">
-                    <button type="submit" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white text-lg font-semibold px-10 py-3 rounded-xl hover:from-green-600 hover:to-emerald-700 shadow-lg transition flex items-center">
-                        <i class="fas fa-save mr-2"></i>నా జీవిత కథను సేవ్ చేయండి
-                    </button>
+            <!-- Life Timeline -->
+            <section class="mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 border-l-4 border-blue-600 pl-4">
+                    జీవిత కాలక్రమం
+                </h2>
+                
+                <div class="life-timeline">
+                    
+                    <!-- Chapter 1: Childhood -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-2xl font-bold text-gray-800">బాల్యం మరియు ప్రారంభ జీవితం</h3>
+                                <span class="text-blue-600 font-medium">1971-1989</span>
+                            </div>
+                            <div class="text-gray-700 space-y-3">
+                                <p>• <strong>జూన్ 28, 1971:</strong> ప్రెటోరియా, దక్షిణాఫ్రికాలో జన్మించారు</p>
+                                <p>• తండ్రి ఎరోల్ మస్క్ (దక్షిణాఫ్రికా ఇంజనీర్), తల్లి మే మస్క్ (కెనడా మాడల్ మరియు న్యూట్రిషనిస్ట్)</p>
+                                <p>• 10 సంవత్సరాల వయస్సులో కంప్యూటర్ ప్రోగ్రామింగ్ నేర్చుకున్నారు</p>
+                                <p>• 12 సంవత్సరాల వయస్సులో తన మొదటి వీడియో గేమ్ "బ్లాస్టర్" విక్రయించారు</p>
+                                <p>• 17 సంవత్సరాల వయస్సులో కెనడాకు వెళ్ళారు, తల్లి నేషనాలిటీ ద్వారా కెనడా పాస్‌పోర్ట్ పొందారు</p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="chapter-tag">బాల్యం</span>
+                                <span class="chapter-tag">ప్రారంభ ఏజ్</span>
+                                <span class="chapter-tag">కంప్యూటర్ ప్రోగ్రామింగ్</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chapter 2: Education -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-2xl font-bold text-gray-800">విద్య</h3>
+                                <span class="text-blue-600 font-medium">1990-1995</span>
+                            </div>
+                            <div class="text-gray-700 space-y-3">
+                                <p>• <strong>క్వీన్స్ యూనివర్సిటీ, కింగ్స్టన్, ఒంటారియో (1990-1992):</strong> ఫిజిక్స్ మరియు ఎకనామిక్స్ చదివారు</p>
+                                <p>• <strong>పెన్సిల్వేనియా విశ్వవిద్యాలయం (1992-1995):</strong> ఫిజిక్స్ బీఎస్ మరియు ఎకనామిక్స్ బీఎ పట్టా పొందారు</p>
+                                <p>• స్టాన్ఫోర్డ్ విశ్వవిద్యాలయంలో ఎనర్జీ ఫిజిక్స్ పీహెచ్‌డీ ప్రోగ్రామ్‌లో చేరారు కానీ 2 రోజుల తర్వాత విడిచిపెట్టారు</p>
+                                <p>• ఇంటర్నెట్ రివల్యూషన్ సమయంలో వ్యాపార అవకాశాలను చూసారు</p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="chapter-tag">కళాశాల విద్య</span>
+                                <span class="chapter-tag">ఫిజిక్స్</span>
+                                <span class="chapter-tag">ఎకనామిక్స్</span>
+                                <span class="chapter-tag">స్టాన్ఫోర్డ్</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chapter 3: Zip2 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-2xl font-bold text-gray-800">Zip2 - మొదటి వ్యాపార సాఫ్ట్‌వేర్ కంపెనీ</h3>
+                                <span class="text-blue-600 font-medium">1995-1999</span>
+                            </div>
+                            <div class="text-gray-700 space-y-3">
+                                <p>• <strong>1995:</strong> తన సోదరుడు కిమ్బల్ మస్క్ తో కలిసి Zip2 స్థాపించారు</p>
+                                <p>• ఆన్‌లైన్ న్యూస్‌పేపర్ పబ్లిషింగ్ సాఫ్ట్‌వేర్ అభివృద్ధి చేశారు</p>
+                                <p>• న్యూయార్క్ టైమ్స్ మరియు షికాగో ట్రిబ్యూన్ వంటి ప్రముఖ వార్తాపత్రికలకు సేవలు అందించారు</p>
+                                <p>• <strong>1999:</strong> కంప్యూటర్ అసోసియేట్స్ Zip2ని $307 మిలియన్లకు కొనుగోలు చేసింది</p>
+                                <p>• ఈ వ్యవహారం నుండి మస్క్ $22 మిలియన్లు పొందారు</p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="chapter-tag">మొదటి స్టార్టప్</span>
+                                <span class="chapter-tag">సాఫ్ట్‌వేర్</span>
+                                <span class="chapter-tag">ఎగ్జిట్ సక్సెస్</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chapter 4: X.com and PayPal -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-2xl font-bold text-gray-800">X.com మరియు PayPal</h3>
+                                <span class="text-blue-600 font-medium">1999-2002</span>
+                            </div>
+                            <div class="text-gray-700 space-y-3">
+                                <p>• <strong>మార్చి 1999:</strong> ఆన్‌లైన్ ఫైనాన్షియల్ సర్వీసెస్ కంపెనీ X.com స్థాపించారు</p>
+                                <p>• మొదటి ఆన్‌లైన్ బ్యాంకింగ్ సేవలలో ఒకటి</p>
+                                <p>• <strong>2000:</strong> X.com కాన్ఫినిటీతో విలీనం అయ్యి PayPal అయింది</p>
+                                <p>• ఆక్టోబర్ 2002 వరకు పేపాల్ బోర్డ్ డైరెక్టర్‌గా పనిచేశారు</p>
+                                <p>• <strong>జూలై 2002:</strong> eBay PayPalని $1.5 బిలియన్లకు కొనుగోలు చేసింది</p>
+                                <p>• ఈ డీల్ నుండి మస్క్ $165 మిలియన్లు పొందారు</p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="chapter-tag">ఫైనాన్స్</span>
+                                <span class="chapter-tag">ఆన్‌లైన్ పేమెంట్స్</span>
+                                <span class="chapter-tag">eBay ఎక్విజిషన్</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chapter 5: SpaceX -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-2xl font-bold text-gray-800">స్పేస్‌ఎక్స్ - అంతరిక్ష విప్లవం</h3>
+                                <span class="text-blue-600 font-medium">2002-ప్రస్తుతం</span>
+                            </div>
+                            <div class="text-gray-700 space-y-3">
+                                <p>• <strong>మే 2002:</strong> స్పేస్ ఎక్స్ప్లోరేషన్ టెక్నాలజీస్ కార్ప్ (స్పేస్‌ఎక్స్) స్థాపించారు</p>
+                                <p>• మార్స్ ఓయాసిస్ ప్రాజెక్ట్ నుండి ప్రేరణ పొందారు</p>
+                                <p>• <strong>2006-2008:</strong> ఫాల్కన్ 1 యొక్క మొదటి 3 ప్రయత్నాలు విఫలమయ్యాయి</p>
+                                <p>• <strong>సెప్టెంబర్ 2008:</strong> ఫాల్కన్ 1 యొక్క 4వ ప్రయత్నం విజయవంతమైంది</p>
+                                <p>• <strong>2010:</strong> డ్రాగన్ క్యాప్స్యూల్ ప్రారంభించారు</p>
+                                <p>• <strong>2015:</strong> ఫాల్కన్ 9 రాకెట్ విజయవంతంగా ల్యాండ్ అయింది</p>
+                                <p>• <strong>2020:</strong> నాసాతో కలిసి క్రూ డ్రాగన్ మిషన్ విజయవంతమైంది</p>
+                                <p>• <strong>2023:</strong> స్టార్‌షిప్ ప్రోటోటైప్ టెస్ట్‌లు</p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="chapter-tag">అంతరిక్షం</span>
+                                <span class="chapter-tag">రాకెట్ సైన్స్</span>
+                                <span class="chapter-tag">మార్స్ కలన</span>
+                                <span class="chapter-tag">ఇన్నోవేషన్</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chapter 6: Tesla -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-2xl font-bold text-gray-800">టెస్లా - ఎలక్ట్రిక్ కారు విప్లవం</h3>
+                                <span class="text-blue-600 font-medium">2004-ప్రస్తుతం</span>
+                            </div>
+                            <div class="text-gray-700 space-y-3">
+                                <p>• <strong>2004:</strong> టెస్లా మోటార్స్‌లో $6.5 మిలియన్లు పెట్టుబడి పెట్టి చైర్మన్ అయ్యారు</p>
+                                <p>• <strong>2008:</strong> టెస్లా CEO అయ్యారు</p>
+                                <p>• <strong>2008:</strong> టెస్లా రోడ్స్టర్ ప్రారంభించారు</p>
+                                <p>• <strong>2012:</strong> మోడల్ S ప్రారంభించారు</p>
+                                <p>• <strong>2015:</strong> మోడల్ X ప్రారంభించారు</p>
+                                <p>• <strong>2017:</strong> మోడల్ 3 ప్రారంభించారు</p>
+                                <p>• <strong>2020:</strong> టెస్లా S&P 500లో చేరింది</p>
+                                <p>• <strong>2022:</strong> టెస్లా మార్కెట్ క్యాప్ $1 ట్రిలియన్ మించింది</p>
+                                <p>• గిగాఫాక్టరీలు: నెవాడా, న్యూయార్క్, టెక్సాస్, బెర్లిన్, షాంఘాయ్</p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="chapter-tag">ఎలక్ట్రిక్ వాహనాలు</span>
+                                <span class="chapter-tag">సస్టెయినబుల్ ఎనర్జీ</span>
+                                <span class="chapter-tag">ఆటోపైలట్</span>
+                                <span class="chapter-tag">ఎనర్జీ స్టోరేజ్</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chapter 7: Other Ventures -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-2xl font-bold text-gray-800">ఇతర వెంచర్లు</h3>
+                                <span class="text-blue-600 font-medium">2006-ప్రస్తుతం</span>
+                            </div>
+                            <div class="text-gray-700 space-y-3">
+                                <p><strong>సోలార్‌సిటీ (2006):</strong></p>
+                                <p>• కుటుంబ సభ్యులతో కలిసి సోలార్ ఎనర్జీ సర్వీసెస్ కంపెనీ స్థాపించారు</p>
+                                <p>• 2016లో టెస్లా సోలార్‌సిటీని కొనుగోలు చేసింది</p>
+                                
+                                <p><strong>న్యూరాలింక్ (2016):</strong></p>
+                                <p>• మెదడు-కంప్యూటర్ ఇంటర్ఫేస్ టెక్నాలజీ పై పనిచేస్తుంది</p>
+                                <p>• పక్షవాతం మరియు నరాల వ్యాధులతో బాధపడేవారికి సహాయపడటం లక్ష్యం</p>
+                                
+                                <p><strong>ది బోరింగ్ కంపెనీ (2016):</strong></p>
+                                <p>• అండర్‌గ్రౌండ్ టనల్ కన్స్ట్రక్షన్ కంపెనీ</p>
+                                <p>• అల్ట్రా-ఫాస్ట్ ట్రాన్స్పోర్టేషన్ సిస్టమ్‌లు అభివృద్ధి చేస్తుంది</p>
+                                
+                                <p><strong>ఓపెన్‌ఎయి (2015):</strong></p>
+                                <p>• కృత్రిమ మేధస్సు పరిశోధన ల్యాబ్ సహ-స్థాపకుడు</p>
+                                <p>• ChatGPT మరియు GPT మోడల్స్ సృష్టించింది</p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="chapter-tag">సోలార్ ఎనర్జీ</span>
+                                <span class="chapter-tag">న్యూరోటెక్నాలజీ</span>
+                                <span class="chapter-tag">టనల్ కన్స్ట్రక్షన్</span>
+                                <span class="chapter-tag">AI రీసెర్చ్</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chapter 8: Twitter/X -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-2xl font-bold text-gray-800">ట్విట్టర్/X</h3>
+                                <span class="text-blue-600 font-medium">2022-ప్రస్తుతం</span>
+                            </div>
+                            <div class="text-gray-700 space-y-3">
+                                <p>• <strong>ఏప్రిల్ 2022:</strong> ట్విట్టర్‌లో 9.2% షేర్లు కొనుగోలు చేశారు</p>
+                                <p>• <strong>ఏప్రిల్ 25, 2022:</strong> ట్విట్టర్‌ను $44 బిలియన్లకు కొనుగోలు చేస్తానని ఒప్పందం చేసుకున్నారు</p>
+                                <p>• <strong>అక్టోబర్ 27, 2022:</strong> ట్విట్టర్‌ను కొనుగోలు చేసి ప్రైవేట్ కంపెనీగా మార్చారు</p>
+                                <p>• <strong>అక్టోబర్ 28, 2022:</strong> ట్విట్టర్ CEO అయ్యారు</p>
+                                <p>• <strong>జూలై 2023:</strong> ట్విట్టర్ పేరును Xగా మార్చారు</p>
+                                <p>• "ఎవరైనా చేయగలిగిన ఏదైనా చేయగలిగే" ఆల్-ఇన్-వన్ ఆప్లికేషన్ అభివృద్ధి చేయడం లక్ష్యం</p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="chapter-tag">సోషల్ మీడియా</span>
+                                <span class="chapter-tag">డిజిటల్ ప్లాట్‌ఫారమ్</span>
+                                <span class="chapter-tag">కంటెంట్ మోడరేషన్</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chapter 9: Personal Life -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-2xl font-bold text-gray-800">వ్యక్తిగత జీవితం</h3>
+                                <span class="text-blue-600 font-medium">1990-ప్రస్తుతం</span>
+                            </div>
+                            <div class="text-gray-700 space-y-3">
+                                <p><strong>కుటుంబం:</strong></p>
+                                <p>• 2000-2008: జస్టిన్ విల్సన్ తో వివాహం (6 పిల్లలు)</p>
+                                <p>• 2010-2012: టాలులా రిలే తో వివాహం (2 సార్లు విడాకులు)</p>
+                                <p>• 2013-2016: అంబర్ హర్డ్ తో డేటింగ్</p>
+                                <p>• 2018-2021: గ్రైమ్స్ (క్లెయిర్ బౌచెర్) తో డేటింగ్ (2 పిల్లలు)</p>
+                                <p>• 2021-2022: షివోన్ జిల్లిస్ తో డేటింగ్ (ఇద్దరు పిల్లలు)</p>
+                                
+                                <p><strong>పిల్లలు:</strong> మొత్తం 11 పిల్లలు (2 మరణించారు)</p>
+                                
+                                <p><strong>నివాసం:</strong></p>
+                                <p>• ప్రధానంగా టెక్సాస్ లో నివసిస్తారు</p>
+                                <p>• అత్యంత సరళమైన జీవనశైలి</p>
+                                <p>• కాల్పు నగరంలో $50,000 ఇంట్లో నివసిస్తారని నివేదికలు</p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="chapter-tag">కుటుంబం</span>
+                                <span class="chapter-tag">రిలేషన్షిప్స్</span>
+                                <span class="chapter-tag">లైఫ్‌స్టైల్</span>
+                                <span class="chapter-tag">ఫిలాంథ్రోపీ</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chapter 10: Philosophy and Legacy -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-2xl font-bold text-gray-800">దర్శనం మరియు వారసత్వం</h3>
+                                <span class="text-blue-600 font-medium">ప్రస్తుతం</span>
+                            </div>
+                            <div class="text-gray-700 space-y-3">
+                                <p><strong>దర్శనం:</strong></p>
+                                <p>• "మానవత్వాన్ని బహుగ్రహ జాతిగా మార్చడం" అత్యంత ముఖ్యమైన లక్ష్యం</p>
+                                <p>• సస్టెయినబుల్ ఎనర్జీకి మార్పు అత్యంత అవసరమైనది</p>
+                                <p>• AI సురక్షితంగా అభివృద్ధి చేయడం మానవత్వం కోసం కీలకం</p>
+                                
+                                <p><strong>వారసత్వం:</strong></p>
+                                <p>• ప్రైవేట్ స్పేస్ ఇండస్ట్రీని సృష్టించారు</p>
+                                <p>• ఎలక్ట్రిక్ వాహనాలను ప్రధాన స్ట్రీమ్‌గా మార్చారు</p>
+                                <p>• మల్టీప్లానెటరీ జీవితానికి మార్గం సృష్టించారు</p>
+                                <p>• పునరుత్పాదక శక్తి మార్కెట్‌ను రూపాంతరం చేశారు</p>
+                                
+                                <p><strong>ప్రస్తుత స్థితి:</strong></p>
+                                <p>• ప్రపంచంలో అత్యంధ ధనవంతులలో ఒకరు</p>
+                                <p>• స్పేస్‌ఎక్స్, టెస్లా, X (ట్విట్టర్), న్యూరాలింక్, ది బోరింగ్ కంపెనీల CEO</p>
+                                <p>• స్థిరంగా మార్స్ కలన మరియు సస్టెయినబిలిటీ ప్రచారం చేస్తారు</p>
+                            </div>
+                            <div class="mt-4">
+                                <span class="chapter-tag">ఫిలాసఫీ</span>
+                                <span class="chapter-tag">లెగసీ</span>
+                                <span class="chapter-tag">ఇంపాక్ట్</span>
+                                <span class="chapter-tag">ఫ్యూచర్ విజన్</span>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
-            </form>
-        </div>
-    </section>
+            </section>
 
-    <!-- How It Works -->
-    <section class="container mx-auto px-4 py-12 max-w-6xl">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">ఇది ఎలా పనిచేస్తుంది?</h2>
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="text-center p-6">
-                <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
-                    1
+            <!-- Key Achievements -->
+            <section class="mb-12">
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 border-l-4 border-blue-600 pl-4">
+                        ప్రధాన విజయాలు
+                    </h2>
+                    
+                    <div class="space-y-6">
+                        <div class="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
+                            <h4 class="font-bold text-gray-800 text-lg mb-2">1. ప్రైవేట్ స్పేస్‌ఫ్లైట్ విప్లవం</h4>
+                            <p class="text-gray-700">స్పేస్‌ఎక్స్ ద్వారా రీసైకిల్ చేయగల రాకెట్లను అభివృద్ధి చేయడం, అంతరిక్ష ప్రయాణ ఖర్చును 90% తగ్గించడం.</p>
+                        </div>
+                        
+                        <div class="p-4 bg-blue-50 rounded-xl border-l-4 border-blue-500">
+                            <h4 class="font-bold text-gray-800 text-lg mb-2">2. ఎలక్ట్రిక్ వాహనాలను ప్రధాన స్ట్రీమ్‌గా మార్చడం</h4>
+                            <p class="text-gray-700">టెస్లా ద్వారా ఎలక్ట్రిక్ కార్లను డిజైరబుల్, ప్రాక్టికల్ మరియు ఎక్కువ మందికి సాధ్యమయ్యేవిగా మార్చడం.</p>
+                        </div>
+                        
+                        <div class="p-4 bg-purple-50 rounded-xl border-l-4 border-purple-500">
+                            <h4 class="font-bold text-gray-800 text-lg mb-2">3. మార్స్ కలనను వాస్తవిక లక్ష్యంగా మార్చడం</h4>
+                            <p class="text-gray-700">మానవత్వాన్ని మల్టీప్లానెటరీ జాతిగా మార్చడానికి స్పేస్‌ఎక్స్ స్టార్‌షిప్ ప్రోగ్రామ్‌ను ప్రారంభించడం.</p>
+                        </div>
+                        
+                        <div class="p-4 bg-yellow-50 rounded-xl border-l-4 border-yellow-500">
+                            <h4 class="font-bold text-gray-800 text-lg mb-2">4. న్యూరాలింక్ ద్వారా మెదడు-కంప్యూటర్ ఇంటర్ఫేస్</h4>
+                            <p class="text-gray-700">మానవ మెదడుకు మెషీన్లను కనెక్ట్ చేయడం ద్వారా నరాల వ్యాధుల నుండి సంపూర్ణ పరిష్కారం అందించడం.</p>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="text-xl font-semibold mb-3">వివరాలు రాయండి</h3>
-                <p class="text-gray-600">పుట్టిన తేదీ, విద్య, విజయాలు వంటి ప్రాథమిక వివరాలు నింపండి.</p>
-            </div>
-            <div class="text-center p-6">
-                <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
-                    2
+            </section>
+
+            <!-- Life Lessons -->
+            <section class="mb-12">
+                <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-2xl shadow-xl p-8">
+                    <h2 class="text-3xl font-bold mb-6">ఇలాన్ మస్క్ నుండి జీవిత పాఠాలు</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white bg-opacity-10 p-6 rounded-xl">
+                            <h4 class="text-xl font-bold mb-3">1. ఫిజిక్స్ మైండ్‌సెట్</h4>
+                            <p>"ఫిజిక్స్ యొక్క మొదటి సూత్రాల నుండి ఆలోచించండి, సారూప్యత ద్వారా కాదు."</p>
+                        </div>
+                        
+                        <div class="bg-white bg-opacity-10 p-6 rounded-xl">
+                            <h4 class="text-xl font-bold mb-3">2. ఫెయిల్యూర్ అంగీకారం</h4>
+                            <p>"మీరు విఫలం కాకుండా ఆవిష్కరించలేరు. మీరు విఫలమయ్యే అవకాశం లేకుంటే, మీరు చాలా ఆవిష్కరించలేరు."</p>
+                        </div>
+                        
+                        <div class="bg-white bg-opacity-10 p-6 rounded-xl">
+                            <h4 class="text-xl font-bold mb-3">3. నిరంతర సంస్కరణ</h4>
+                            <p>"నేను ఫ్యాక్టరీలను ఫ్యాక్టరీలుగా ఆలోచించను, నేను వాటిని ప్రోడక్ట్‌గా ఆలోచిస్తాను."</p>
+                        </div>
+                        
+                        <div class="bg-white bg-opacity-10 p-6 rounded-xl">
+                            <h4 class="text-xl font-bold mb-3">4. అసాధ్యం అనేది లేదు</h4>
+                            <p>"ఏదైనా చేయగలిగేది చేయడానికి సాధ్యమే, కానీ అసాధ్యం చేయడానికి కొంచెం ఎక్కువ సమయం పడుతుంది."</p>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="text-xl font-semibold mb-3">కథను విస్తరించండి</h3>
-                <p class="text-gray-600">ప్రతి అధ్యాయానికి ఫోటోలు, వీడియోలు, కథనాలు జోడించండి.</p>
-            </div>
-            <div class="text-center p-6">
-                <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
-                    3
+            </section>
+
+            <!-- Sources and References -->
+            <section class="mb-12">
+                <div class="bg-gray-100 rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">సోర్సులు మరియు రిఫరెన్సెస్</h3>
+                    <ul class="text-gray-700 space-y-2">
+                        <li>• వాల్టర్ ఐజాక్సన్ రచించిన "ఇలాన్ మస్క్" బయోగ్రఫీ (2023)</li>
+                        <li>• ఆష్లీ వ్యాన్స్ రచించిన "ఎలాన్ మస్క్: టెస్లా, స్పేస్‌ఎక్స్, అండ్ ది క్వెస్ట్ ఫర్ ఎ ఫ్యూచర్ ఫ్యాంటాస్టిక్" (2015)</li>
+                        <li>• స్పేస్‌ఎక్స్ అధికారిక వెబ్‌సైట్ మరియు ఆర్కైవ్స్</li>
+                        <li>• టెస్లా అధికారిక వెబ్‌సైట్ మరియు ఇన్వెస్టర్ రిలేషన్స్</li>
+                        <li>• మస్క్ యొక్క బయోగ్రఫీ ఆన్ స్పేస్‌ఎక్స్ వెబ్‌సైట్</li>
+                        <li>• వివిధ ఇంటర్వ్యూలు: జో రోగన్, TED, SXSW</li>
+                    </ul>
                 </div>
-                <h3 class="text-xl font-semibold mb-3">షేర్ చేయండి</h3>
-                <p class="text-gray-600">మీ కుటుంబం, మిత్రులతో పంచుకోండి లేదా ప్రపంచానికి చూపించండి.</p>
-            </div>
+            </section>
+
         </div>
-    </section>
+    </main>
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8">
         <div class="container mx-auto px-4 text-center">
-            <p class="text-lg mb-2">© 2023 Lifepages.store. All rights reserved.</p>
-            <p class="text-gray-400">మీ జీవిత చరిత్రను శాశ్వతంగా సంగ్రహించే స్థలం</p>
+            <p class="text-lg mb-2">© 2023 Lifepages.store</p>
+            <p class="text-gray-400">జీవిత చరిత్రలను శాశ్వతంగా సంగ్రహించే స్థలం</p>
+            <p class="text-gray-500 text-sm mt-4">
+                ఈ కథలోని సమాచారం బహుళ సోర్సుల నుండి సేకరించబడింది. ఇది విద్యాపరమైన ప్రయోజనాల కోసం మాత్రమే.
+            </p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script>
-        // Show form when "Start Story" button is clicked
-        document.getElementById('startStoryBtn').addEventListener('click', function() {
-            document.getElementById('storyForm').classList.remove('hidden');
-            this.classList.add('hidden');
-            window.scrollTo({
-                top: document.getElementById('storyForm').offsetTop - 50,
-                behavior: 'smooth'
-            });
-        });
+    <!-- Back to Top Button -->
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+            class="fixed bottom-6 right-6 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
-        // Add more education entries
-        document.getElementById('addEducation').addEventListener('click', function() {
-            const container = document.getElementById('educationContainer');
-            const newEntry = document.createElement('div');
-            newEntry.className = 'education-entry border-l-4 border-blue-500 pl-6 pb-6 mb-6 relative';
-            newEntry.innerHTML = `
-                <div class="timeline-dot absolute -left-2 top-0 bg-blue-500 rounded-full"></div>
-                <div class="grid md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-gray-700 mb-2">విద్యా స్థాయి</label>
-                        <select class="w-full p-3 border border-gray-300 rounded-lg">
-                            <option>పాఠశాల</option>
-                            <option>ఇంటర్మీడియట్</option>
-                            <option>డిగ్రీ</option>
-                            <option>పోస్ట్ గ్రాడ్యుయేషన్</option>
-                            <option>డాక్టరేట్</option>
-                            <option>డిప్లొమా</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 mb-2">సంవత్సరం</label>
-                        <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="ఉదా: 2010-2014">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-gray-700 mb-2">సంస్థ పేరు</label>
-                        <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="కళాశాల/విశ్వవిద్యాలయం పేరు">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-gray-700 mb-2">వివరణ (ఐచ్ఛికం)</label>
-                        <textarea class="w-full p-3 border border-gray-300 rounded-lg" rows="2" placeholder="మీరు నేర్చుకున్నది, గుర్తుండిపోయే అనుభవాలు..."></textarea>
-                    </div>
-                </div>
-                <button type="button" class="remove-education mt-3 text-red-500 hover:text-red-700 text-sm flex items-center">
-                    <i class="fas fa-trash-alt mr-1"></i> ఈ విద్యా వివరాన్ని తీసేయండి
-                </button>
-            `;
-            container.appendChild(newEntry);
-            
-            // Add remove functionality to new button
-            newEntry.querySelector('.remove-education').addEventListener('click', function() {
-                container.removeChild(newEntry);
-            });
-        });
-
-        // Add more achievement entries
-        document.getElementById('addAchievement').addEventListener('click', function() {
-            const container = document.getElementById('achievementsContainer');
-            const newEntry = document.createElement('div');
-            newEntry.className = 'achievement-entry bg-yellow-50 border border-yellow-200 rounded-xl p-5 mb-4';
-            newEntry.innerHTML = `
-                <div class="flex justify-between items-start mb-3">
-                    <div style="width: 90%;">
-                        <label class="block text-gray-700 mb-2">విజయం/సాధన పేరు *</label>
-                        <input type="text" class="w-full p-3 border border-gray-300 rounded-lg mb-3" placeholder="ఉదా: ప్రాజెక్ట్ పూర్తి చేయడం, పురస్కారం, ఉద్యోగ ప్రమోషన్">
-                    </div>
-                    <button type="button" class="remove-achievement text-red-500 hover:text-red-700">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="grid md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-gray-700 mb-2">సంవత్సరం</label>
-                        <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="ఉదా: 2020">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 mb-2">ప్రాముఖ్యత</label>
-                        <select class="w-full p-3 border border-gray-300 rounded-lg">
-                            <option>సాధారణ</option>
-                            <option>మధ్యస్థ</option>
-                            <option>ముఖ్యమైనది</option>
-                            <option>జీవితంలో మలుపు</option>
-                        </select>
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-gray-700 mb-2">వివరణ</label>
-                        <textarea class="w-full p-3 border border-gray-300 rounded-lg" rows="3" placeholder="ఈ విజయం గురించి మరింత వివరించండి..."></textarea>
-                    </div>
-                </div>
-            `;
-            container.appendChild(newEntry);
-            
-            // Add remove functionality to new button
-            newEntry.querySelector('.remove-achievement').addEventListener('click', function() {
-                container.removeChild(newEntry);
-            });
-        });
-
-        // Handle form submission
-        document.getElementById('lifeStoryForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = {
-                fullName: document.getElementById('fullName').value,
-                dob: document.getElementById('dob').value,
-                birthPlace: document.getElementById('birthPlace').value,
-                currentCity: document.getElementById('currentCity').value,
-                lifeSummary: document.getElementById('lifeSummary').value,
-                education: [],
-                achievements: []
-            };
-            
-            // Get education entries
-            document.querySelectorAll('.education-entry').forEach(entry => {
-                const inputs = entry.querySelectorAll('input, select, textarea');
-                if(inputs[0].value) {
-                    formData.education.push({
-                        level: inputs[0].value,
-                        years: inputs[1].value,
-                        institution: inputs[2].value,
-                        description: inputs[3].value
-                    });
-                }
-            });
-            
-            // Get achievement entries
-            document.querySelectorAll('.achievement-entry').forEach(entry => {
-                const inputs = entry.querySelectorAll('input, select, textarea');
-                if(inputs[0].value) {
-                    formData.achievements.push({
-                        title: inputs[0].value,
-                        year: inputs[1].value,
-                        importance: inputs[2].value,
-                        description: inputs[3].value
-                    });
-                }
-            });
-            
-            // Display success message
-            alert(`ధన్యవాదాలు ${formData.fullName}!\n\nమీ జీవిత వివరాలు విజయవంతంగా సేవ్ చేయబడ్డాయి.\n\nతర్వాత మీరు:\n• ఫోటోలు జోడించవచ్చు\n• కుటుంబ సభ్యులను ఆహ్వానించవచ్చు\n• మీ కథను షేర్ చేయవచ్చు`);
-            
-            // In real app, you would send this data to your backend
-            console.log('Form data:', formData);
-            
-            // Reset form after 2 seconds
-            setTimeout(() => {
-                this.reset();
-                document.getElementById('storyForm').classList.add('hidden');
-                document.getElementById('startStoryBtn').classList.remove('hidden');
-                // Clear dynamic entries
-                document.getElementById('educationContainer').innerHTML = `
-                    <div class="education-entry border-l-4 border-blue-500 pl-6 pb-6 mb-6 relative">
-                        <div class="timeline-dot absolute -left-2 top-0 bg-blue-500 rounded-full"></div>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-gray-700 mb-2">విద్యా స్థాయి</label>
-                                <select class="w-full p-3 border border-gray-300 rounded-lg">
-                                    <option>పాఠశాల</option>
-                                    <option>ఇంటర్మీడియట్</option>
-                                    <option>డిగ్రీ</option>
-                                    <option>పోస్ట్ గ్రాడ్యుయేషన్</option>
-                                    <option>డాక్టరేట్</option>
-                                    <option>డిప్లొమా</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 mb-2">సంవత్సరం</label>
-                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="ఉదా: 2010-2014">
-                            </div>
-                            <div class="md:col-span-2">
-                                <label class="block text-gray-700 mb-2">సంస్థ పేరు</label>
-                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="కళాశాల/విశ్వవిద్యాలయం పేరు">
-                            </div>
-                            <div class="md:col-span-2">
-                                <label class="block text-gray-700 mb-2">వివరణ (ఐచ్ఛికం)</label>
-                                <textarea class="w-full p-3 border border-gray-300 rounded-lg" rows="2" placeholder="మీరు నేర్చుకున్నది, గుర్తుండిపోయే అనుభవాలు..."></textarea>
-                            </div>
-                        </div>
-                    </div>`;
-                document.getElementById('achievementsContainer').innerHTML = `
-                    <div class="achievement-entry bg-yellow-50 border border-yellow-200 rounded-xl p-5 mb-4">
-                        <div class="flex justify-between items-start mb-3">
-                            <div>
-                                <label class="block text-gray-700 mb-2">విజయం/సాధన పేరు *</label>
-                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg mb-3" placeholder="ఉదా: ప్రాజెక్ట్ పూర్తి చేయడం, పురస్కారం, ఉద్యోగ ప్రమోషన్">
-                            </div>
-                            <button type="button" class="remove-achievement text-red-500 hover:text-red-700">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-gray-700 mb-2">సంవత్సరం</label>
-                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="ఉదా: 2020">
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 mb-2">ప్రాముఖ్యత</label>
-                                <select class="w-full p-3 border border-gray-300 rounded-lg">
-                                    <option>సాధారణ</option>
-                                    <option>మధ్యస్థ</option>
-                                    <option>ముఖ్యమైనది</option>
-                                    <option>జీవితంలో మలుపు</option>
-                                </select>
-                            </div>
-                            <div class="md:col-span-2">
-                                <label class="block text-gray-700 mb-2">వివరణ</label>
-                                <textarea class="w-full p-3 border border-gray-300 rounded-lg" rows="3" placeholder="ఈ విజయం గురించి మరింత వివరించండి..."></textarea>
-                            </div>
-                        </div>
-                    </div>`;
-            }, 2000);
-        });
-
-        // Initialize remove buttons for first achievement
-        document.querySelector('.remove-achievement').addEventListener('click', function() {
-            const container = document.getElementById('achievementsContainer');
-            if(container.children.length > 1) {
-                container.removeChild(this.closest('.achievement-entry'));
-            } else {
-                alert('మీరు కనీసం ఒక విజయాన్ని జోడించాలి.');
-            }
-        });
-    </script>
 </body>
 </html>
