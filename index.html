@@ -1,157 +1,460 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 <head>
-  <meta charset="UTF-8">
-  <title>LifeUnwritten – Real Life Stories</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background: #1e1e1e;
-      color: white;
-      padding: 25px;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-    }
-
-    .container {
-      width: 90%;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .btn {
-      background: #ff9800;
-      color: white;
-      padding: 10px 18px;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-
-    .form-box, .story {
-      background: white;
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 8px;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-    }
-
-    textarea {
-      height: 150px;
-    }
-
-    .story h3 {
-      margin-bottom: 5px;
-    }
-
-    .category {
-      font-size: 13px;
-      color: #555;
-    }
-
-    footer {
-      background: #1e1e1e;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 30px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifepages - మీ జీవిత కథను సంగ్రహించండి</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans Telugu', sans-serif; }
+        .timeline-dot { width: 12px; height: 12px; }
+        .section-title { position: relative; padding-left: 1rem; }
+        .section-title:before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 4px; height: 24px; background: #3b82f6; border-radius: 2px; }
+    </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800">
+    
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold">LP</span>
+                </div>
+                <span class="text-xl font-bold text-blue-700">Lifepages.store</span>
+            </div>
+            <div>
+                <button class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">
+                    <i class="fas fa-sign-in-alt mr-2"></i>లాగిన్
+                </button>
+            </div>
+        </div>
+    </header>
 
-<header>
-  <h1>LifeUnwritten</h1>
-  <p>Every life has a story.</p>
-</header>
+    <!-- Hero Section -->
+    <section class="py-12 bg-gradient-to-r from-blue-50 to-indigo-50">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                మీ <span class="text-blue-600">జీవిత కథ</span> ఇక్కడ నిలిపేయండి
+            </h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+                పుట్టిన నాడు నుంచి ఈ రోజు వరకు - మీ విద్య, విజయాలు, జీవితంలోని ముఖ్యమైన క్షణాలన్నింటినీ ఒకే చోట సేకరించండి.
+            </p>
+            <button id="startStoryBtn" class="bg-blue-600 text-white text-lg px-8 py-3 rounded-xl hover:bg-blue-700 shadow-lg transition transform hover:-translate-y-1">
+                <i class="fas fa-pen-fancy mr-2"></i>నా కథను ప్రారంభించండి
+            </button>
+        </div>
+    </section>
 
-<div class="container">
+    <!-- Story Form Section -->
+    <section id="storyForm" class="container mx-auto px-4 py-8 max-w-4xl hidden">
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2 section-title">మీ జీవిత వివరాలు రాయండి</h2>
+            <p class="text-gray-600 mb-6">మీ గురించి ప్రాథమిక వివరాలు ఇవ్వండి. తర్వాత మరింత వివరాలు జోడించవచ్చు.</p>
+            
+            <form id="lifeStoryForm">
+                <!-- Personal Details -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 flex items-center">
+                        <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-2">
+                            1
+                        </div>
+                        వ్యక్తిగత వివరాలు
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 mb-2">పూర్తి పేరు *</label>
+                            <input type="text" id="fullName" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">పుట్టిన తేది *</label>
+                            <input type="date" id="dob" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">పుట్టిన ప్రదేశం</label>
+                            <input type="text" id="birthPlace" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="గ్రామం/నగరం">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">ప్రస్తుత నగరం</label>
+                            <input type="text" id="currentCity" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                        </div>
+                    </div>
+                </div>
 
-  <!-- WRITE STORY FORM -->
-  <div class="form-box">
-    <h2>Write Your Life Story</h2>
+                <!-- Education Timeline -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 flex items-center">
+                        <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-2">
+                            2
+                        </div>
+                        విద్యా వ్యవస్థ
+                    </h3>
+                    <div id="educationContainer">
+                        <div class="education-entry border-l-4 border-blue-500 pl-6 pb-6 mb-6 relative">
+                            <div class="timeline-dot absolute -left-2 top-0 bg-blue-500 rounded-full"></div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-gray-700 mb-2">విద్యా స్థాయి</label>
+                                    <select class="w-full p-3 border border-gray-300 rounded-lg">
+                                        <option>పాఠశాల</option>
+                                        <option>ఇంటర్మీడియట్</option>
+                                        <option>డిగ్రీ</option>
+                                        <option>పోస్ట్ గ్రాడ్యుయేషన్</option>
+                                        <option>డాక్టరేట్</option>
+                                        <option>డిప్లొమా</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2">సంవత్సరం</label>
+                                    <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="ఉదా: 2010-2014">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-gray-700 mb-2">సంస్థ పేరు</label>
+                                    <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="కళాశాల/విశ్వవిద్యాలయం పేరు">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-gray-700 mb-2">వివరణ (ఐచ్ఛికం)</label>
+                                    <textarea class="w-full p-3 border border-gray-300 rounded-lg" rows="2" placeholder="మీరు నేర్చుకున్నది, గుర్తుండిపోయే అనుభవాలు..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="addEducation" class="text-blue-600 hover:text-blue-800 flex items-center">
+                        <i class="fas fa-plus-circle mr-2"></i>మరొక విద్యా వివరం జోడించండి
+                    </button>
+                </div>
 
-    <form id="storyForm">
-      <input type="text" id="name" placeholder="Your Name (or Anonymous)" required>
+                <!-- Success/Achievements -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 flex items-center">
+                        <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-2">
+                            3
+                        </div>
+                        విజయాలు & సాధనలు
+                    </h3>
+                    <div id="achievementsContainer">
+                        <div class="achievement-entry bg-yellow-50 border border-yellow-200 rounded-xl p-5 mb-4">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <label class="block text-gray-700 mb-2">విజయం/సాధన పేరు *</label>
+                                    <input type="text" class="w-full p-3 border border-gray-300 rounded-lg mb-3" placeholder="ఉదా: ప్రాజెక్ట్ పూర్తి చేయడం, పురస్కారం, ఉద్యోగ ప్రమోషన్">
+                                </div>
+                                <button type="button" class="remove-achievement text-red-500 hover:text-red-700">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-gray-700 mb-2">సంవత్సరం</label>
+                                    <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="ఉదా: 2020">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2">ప్రాముఖ్యత</label>
+                                    <select class="w-full p-3 border border-gray-300 rounded-lg">
+                                        <option>సాధారణ</option>
+                                        <option>మధ్యస్థ</option>
+                                        <option>ముఖ్యమైనది</option>
+                                        <option>జీవితంలో మలుపు</option>
+                                    </select>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-gray-700 mb-2">వివరణ</label>
+                                    <textarea class="w-full p-3 border border-gray-300 rounded-lg" rows="3" placeholder="ఈ విజయం గురించి మరింత వివరించండి..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="addAchievement" class="text-blue-600 hover:text-blue-800 flex items-center">
+                        <i class="fas fa-plus-circle mr-2"></i>మరొక విజయం జోడించండి
+                    </button>
+                </div>
 
-      <select id="category">
-        <option>Struggle</option>
-        <option>Success</option>
-        <option>Education</option>
-        <option>Love</option>
-        <option>Funny</option>
-      </select>
+                <!-- Life Summary -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 flex items-center">
+                        <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-2">
+                            4
+                        </div>
+                        జీవిత సారాంశం
+                    </h3>
+                    <div>
+                        <label class="block text-gray-700 mb-2">మీ జీవితం గురించి సంక్షిప్తంగా (ఐచ్ఛికం)</label>
+                        <textarea id="lifeSummary" class="w-full p-3 border border-gray-300 rounded-lg" rows="4" placeholder="మీ జీవితం యొక్క ముఖ్య అంశాలు, నేర్చుకున్న పాఠాలు, ఇతరులకు సలహాలు..."></textarea>
+                    </div>
+                </div>
 
-      <textarea id="story" placeholder="Write your life story here..." required></textarea>
+                <!-- Submit Button -->
+                <div class="flex justify-center pt-6">
+                    <button type="submit" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white text-lg font-semibold px-10 py-3 rounded-xl hover:from-green-600 hover:to-emerald-700 shadow-lg transition flex items-center">
+                        <i class="fas fa-save mr-2"></i>నా జీవిత కథను సేవ్ చేయండి
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
 
-      <button class="btn" type="submit">Publish Story</button>
-    </form>
-  </div>
+    <!-- How It Works -->
+    <section class="container mx-auto px-4 py-12 max-w-6xl">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">ఇది ఎలా పనిచేస్తుంది?</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center p-6">
+                <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                    1
+                </div>
+                <h3 class="text-xl font-semibold mb-3">వివరాలు రాయండి</h3>
+                <p class="text-gray-600">పుట్టిన తేదీ, విద్య, విజయాలు వంటి ప్రాథమిక వివరాలు నింపండి.</p>
+            </div>
+            <div class="text-center p-6">
+                <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                    2
+                </div>
+                <h3 class="text-xl font-semibold mb-3">కథను విస్తరించండి</h3>
+                <p class="text-gray-600">ప్రతి అధ్యాయానికి ఫోటోలు, వీడియోలు, కథనాలు జోడించండి.</p>
+            </div>
+            <div class="text-center p-6">
+                <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                    3
+                </div>
+                <h3 class="text-xl font-semibold mb-3">షేర్ చేయండి</h3>
+                <p class="text-gray-600">మీ కుటుంబం, మిత్రులతో పంచుకోండి లేదా ప్రపంచానికి చూపించండి.</p>
+            </div>
+        </div>
+    </section>
 
-  <!-- STORIES LIST -->
-  <h2>Public Life Stories</h2>
-  <div id="stories"></div>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-lg mb-2">© 2023 Lifepages.store. All rights reserved.</p>
+            <p class="text-gray-400">మీ జీవిత చరిత్రను శాశ్వతంగా సంగ్రహించే స్థలం</p>
+        </div>
+    </footer>
 
-</div>
+    <!-- JavaScript -->
+    <script>
+        // Show form when "Start Story" button is clicked
+        document.getElementById('startStoryBtn').addEventListener('click', function() {
+            document.getElementById('storyForm').classList.remove('hidden');
+            this.classList.add('hidden');
+            window.scrollTo({
+                top: document.getElementById('storyForm').offsetTop - 50,
+                behavior: 'smooth'
+            });
+        });
 
-<footer>
-  <p>© 2025 LifeUnwritten | Stories written by users</p>
-</footer>
+        // Add more education entries
+        document.getElementById('addEducation').addEventListener('click', function() {
+            const container = document.getElementById('educationContainer');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'education-entry border-l-4 border-blue-500 pl-6 pb-6 mb-6 relative';
+            newEntry.innerHTML = `
+                <div class="timeline-dot absolute -left-2 top-0 bg-blue-500 rounded-full"></div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">విద్యా స్థాయి</label>
+                        <select class="w-full p-3 border border-gray-300 rounded-lg">
+                            <option>పాఠశాల</option>
+                            <option>ఇంటర్మీడియట్</option>
+                            <option>డిగ్రీ</option>
+                            <option>పోస్ట్ గ్రాడ్యుయేషన్</option>
+                            <option>డాక్టరేట్</option>
+                            <option>డిప్లొమా</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">సంవత్సరం</label>
+                        <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="ఉదా: 2010-2014">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-gray-700 mb-2">సంస్థ పేరు</label>
+                        <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="కళాశాల/విశ్వవిద్యాలయం పేరు">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-gray-700 mb-2">వివరణ (ఐచ్ఛికం)</label>
+                        <textarea class="w-full p-3 border border-gray-300 rounded-lg" rows="2" placeholder="మీరు నేర్చుకున్నది, గుర్తుండిపోయే అనుభవాలు..."></textarea>
+                    </div>
+                </div>
+                <button type="button" class="remove-education mt-3 text-red-500 hover:text-red-700 text-sm flex items-center">
+                    <i class="fas fa-trash-alt mr-1"></i> ఈ విద్యా వివరాన్ని తీసేయండి
+                </button>
+            `;
+            container.appendChild(newEntry);
+            
+            // Add remove functionality to new button
+            newEntry.querySelector('.remove-education').addEventListener('click', function() {
+                container.removeChild(newEntry);
+            });
+        });
 
-<script>
-  // Load stories
-  const storiesContainer = document.getElementById("stories");
-  const stories = JSON.parse(localStorage.getItem("stories")) || [];
+        // Add more achievement entries
+        document.getElementById('addAchievement').addEventListener('click', function() {
+            const container = document.getElementById('achievementsContainer');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'achievement-entry bg-yellow-50 border border-yellow-200 rounded-xl p-5 mb-4';
+            newEntry.innerHTML = `
+                <div class="flex justify-between items-start mb-3">
+                    <div style="width: 90%;">
+                        <label class="block text-gray-700 mb-2">విజయం/సాధన పేరు *</label>
+                        <input type="text" class="w-full p-3 border border-gray-300 rounded-lg mb-3" placeholder="ఉదా: ప్రాజెక్ట్ పూర్తి చేయడం, పురస్కారం, ఉద్యోగ ప్రమోషన్">
+                    </div>
+                    <button type="button" class="remove-achievement text-red-500 hover:text-red-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">సంవత్సరం</label>
+                        <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="ఉదా: 2020">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">ప్రాముఖ్యత</label>
+                        <select class="w-full p-3 border border-gray-300 rounded-lg">
+                            <option>సాధారణ</option>
+                            <option>మధ్యస్థ</option>
+                            <option>ముఖ్యమైనది</option>
+                            <option>జీవితంలో మలుపు</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-gray-700 mb-2">వివరణ</label>
+                        <textarea class="w-full p-3 border border-gray-300 rounded-lg" rows="3" placeholder="ఈ విజయం గురించి మరింత వివరించండి..."></textarea>
+                    </div>
+                </div>
+            `;
+            container.appendChild(newEntry);
+            
+            // Add remove functionality to new button
+            newEntry.querySelector('.remove-achievement').addEventListener('click', function() {
+                container.removeChild(newEntry);
+            });
+        });
 
-  function displayStories() {
-    storiesContainer.innerHTML = "";
-    stories.slice().reverse().forEach(s => {
-      const div = document.createElement("div");
-      div.className = "story";
-      div.innerHTML = `
-        <h3>${s.name}</h3>
-        <div class="category">${s.category}</div>
-        <p>${s.story}</p>
-      `;
-      storiesContainer.appendChild(div);
-    });
-  }
+        // Handle form submission
+        document.getElementById('lifeStoryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                dob: document.getElementById('dob').value,
+                birthPlace: document.getElementById('birthPlace').value,
+                currentCity: document.getElementById('currentCity').value,
+                lifeSummary: document.getElementById('lifeSummary').value,
+                education: [],
+                achievements: []
+            };
+            
+            // Get education entries
+            document.querySelectorAll('.education-entry').forEach(entry => {
+                const inputs = entry.querySelectorAll('input, select, textarea');
+                if(inputs[0].value) {
+                    formData.education.push({
+                        level: inputs[0].value,
+                        years: inputs[1].value,
+                        institution: inputs[2].value,
+                        description: inputs[3].value
+                    });
+                }
+            });
+            
+            // Get achievement entries
+            document.querySelectorAll('.achievement-entry').forEach(entry => {
+                const inputs = entry.querySelectorAll('input, select, textarea');
+                if(inputs[0].value) {
+                    formData.achievements.push({
+                        title: inputs[0].value,
+                        year: inputs[1].value,
+                        importance: inputs[2].value,
+                        description: inputs[3].value
+                    });
+                }
+            });
+            
+            // Display success message
+            alert(`ధన్యవాదాలు ${formData.fullName}!\n\nమీ జీవిత వివరాలు విజయవంతంగా సేవ్ చేయబడ్డాయి.\n\nతర్వాత మీరు:\n• ఫోటోలు జోడించవచ్చు\n• కుటుంబ సభ్యులను ఆహ్వానించవచ్చు\n• మీ కథను షేర్ చేయవచ్చు`);
+            
+            // In real app, you would send this data to your backend
+            console.log('Form data:', formData);
+            
+            // Reset form after 2 seconds
+            setTimeout(() => {
+                this.reset();
+                document.getElementById('storyForm').classList.add('hidden');
+                document.getElementById('startStoryBtn').classList.remove('hidden');
+                // Clear dynamic entries
+                document.getElementById('educationContainer').innerHTML = `
+                    <div class="education-entry border-l-4 border-blue-500 pl-6 pb-6 mb-6 relative">
+                        <div class="timeline-dot absolute -left-2 top-0 bg-blue-500 rounded-full"></div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 mb-2">విద్యా స్థాయి</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg">
+                                    <option>పాఠశాల</option>
+                                    <option>ఇంటర్మీడియట్</option>
+                                    <option>డిగ్రీ</option>
+                                    <option>పోస్ట్ గ్రాడ్యుయేషన్</option>
+                                    <option>డాక్టరేట్</option>
+                                    <option>డిప్లొమా</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2">సంవత్సరం</label>
+                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="ఉదా: 2010-2014">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-gray-700 mb-2">సంస్థ పేరు</label>
+                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="కళాశాల/విశ్వవిద్యాలయం పేరు">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-gray-700 mb-2">వివరణ (ఐచ్ఛికం)</label>
+                                <textarea class="w-full p-3 border border-gray-300 rounded-lg" rows="2" placeholder="మీరు నేర్చుకున్నది, గుర్తుండిపోయే అనుభవాలు..."></textarea>
+                            </div>
+                        </div>
+                    </div>`;
+                document.getElementById('achievementsContainer').innerHTML = `
+                    <div class="achievement-entry bg-yellow-50 border border-yellow-200 rounded-xl p-5 mb-4">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <label class="block text-gray-700 mb-2">విజయం/సాధన పేరు *</label>
+                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg mb-3" placeholder="ఉదా: ప్రాజెక్ట్ పూర్తి చేయడం, పురస్కారం, ఉద్యోగ ప్రమోషన్">
+                            </div>
+                            <button type="button" class="remove-achievement text-red-500 hover:text-red-700">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 mb-2">సంవత్సరం</label>
+                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="ఉదా: 2020">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2">ప్రాముఖ్యత</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg">
+                                    <option>సాధారణ</option>
+                                    <option>మధ్యస్థ</option>
+                                    <option>ముఖ్యమైనది</option>
+                                    <option>జీవితంలో మలుపు</option>
+                                </select>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-gray-700 mb-2">వివరణ</label>
+                                <textarea class="w-full p-3 border border-gray-300 rounded-lg" rows="3" placeholder="ఈ విజయం గురించి మరింత వివరించండి..."></textarea>
+                            </div>
+                        </div>
+                    </div>`;
+            }, 2000);
+        });
 
-  displayStories();
-
-  // Form submit
-  document.getElementById("storyForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const storyData = {
-      name: document.getElementById("name").value,
-      category: document.getElementById("category").value,
-      story: document.getElementById("story").value
-    };
-
-    stories.push(storyData);
-    localStorage.setItem("stories", JSON.stringify(stories));
-
-    this.reset();
-    displayStories();
-    alert("Story published successfully!");
-  });
-</script>
-
+        // Initialize remove buttons for first achievement
+        document.querySelector('.remove-achievement').addEventListener('click', function() {
+            const container = document.getElementById('achievementsContainer');
+            if(container.children.length > 1) {
+                container.removeChild(this.closest('.achievement-entry'));
+            } else {
+                alert('మీరు కనీసం ఒక విజయాన్ని జోడించాలి.');
+            }
+        });
+    </script>
 </body>
 </html>
